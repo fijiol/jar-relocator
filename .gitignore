@@ -10,6 +10,7 @@
 /out/
 *.iml
 .idea_modules/
+.devenv*
 
 # JIRA plugin
 atlassian-ide-plugin.xml

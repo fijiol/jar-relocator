@@ -88,9 +88,9 @@ public final class JarRelocator {
         List<ResourceTransformer> transformers = new ArrayList<>();
         transformers.add(new ServicesResourceTransformer());
 
-        try (JarOutputStream out = new JarOutputStream(new BufferedOutputStream(new FileOutputStream(this.output)))) {
-            try (JarFile in = new JarFile(this.input)) {
-                JarRelocatorTask task = new JarRelocatorTask(this.remapper, out, in, Collections.unmodifiableList(transformers));
+        try (AbstractRelocationSource source = AbstractRelocationSource.getSource(this.input)) {
+            try (AbstractRelocationTargetOutputStream target = AbstractRelocationTargetOutputStream.getRelocationTargetOutputStream(this.output)) {
+                JarRelocatorTask task = new JarRelocatorTask(this.remapper, target, source, Collections.unmodifiableList(transformers));
                 task.processEntries();
             }
         }

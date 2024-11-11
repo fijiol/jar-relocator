@@ -13,19 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package me.lucko.jarrelocator;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
+import java.util.Enumeration;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
-interface ResourceTransformer {
+public class JarRelocationSource extends AbstractRelocationSource {
+    private final JarFile jarFile;
 
-    boolean shouldTransformResource(String resource);
+    public JarRelocationSource(File inputFile) throws IOException {
+        super();
+        this.jarFile = new JarFile(inputFile);
+    }
 
-    void processResource(String resource, InputStream inputStream, Collection<Relocation> rules) throws IOException;
+    @Override
+    public Enumeration<JarEntry> entries() {
+        return jarFile.entries();
+    }
 
-    void writeOutput(AbstractRelocationTargetOutputStream jarOutputStream) throws IOException;
+    @Override
+    public InputStream getInputStream(JarEntry entry) throws IOException {
+        return jarFile.getInputStream(entry);
+    }
 
+    @Override
+    public void close() throws IOException {
+        jarFile.close();
+    }
 }

@@ -53,13 +53,13 @@ final class JarRelocatorTask {
     private static final Pattern SIGNATURE_PROPERTY_PATTERN = Pattern.compile(".*-Digest");
 
     private final RelocatingRemapper remapper;
-    private final JarOutputStream jarOut;
-    private final JarFile jarIn;
+    private final AbstractRelocationTargetOutputStream jarOut;
+    private final AbstractRelocationSource jarIn;
     private final List<ResourceTransformer> transformers;
 
     private final Set<String> resources = new HashSet<>();
 
-    JarRelocatorTask(RelocatingRemapper remapper, JarOutputStream jarOut, JarFile jarIn, List<ResourceTransformer> transformers) {
+    JarRelocatorTask(RelocatingRemapper remapper, AbstractRelocationTargetOutputStream jarOut, AbstractRelocationSource jarIn, List<ResourceTransformer> transformers) {
         this.remapper = remapper;
         this.jarOut = jarOut;
         this.jarIn = jarIn;

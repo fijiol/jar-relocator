@@ -27,7 +27,6 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.jar.JarEntry;
-import java.util.jar.JarOutputStream;
 import java.util.stream.Collectors;
 
 class ServicesResourceTransformer implements ResourceTransformer {
@@ -67,7 +66,7 @@ class ServicesResourceTransformer implements ResourceTransformer {
     }
 
     @Override
-    public void writeOutput(JarOutputStream jarOutputStream) throws IOException {
+    public void writeOutput(AbstractRelocationTargetOutputStream jarOutputStream) throws IOException {
         this.serviceEntries.values().removeIf(Set::isEmpty);
         if (this.serviceEntries.isEmpty()) {
             return;
